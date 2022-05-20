@@ -1,6 +1,6 @@
 # Chocolatine
 
-Chocolatine is a Discord bot created as a side project. It's main purpose is to incite people to bring joy and happyness at work —joy and happyness being food, of course.
+Chocolatine is a Discord bot created as a side project. It's main purpose is to incite people to bring joy and happiness at work —joy and happiness being food, of course.
 
 ## Context
 
