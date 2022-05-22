@@ -16,29 +16,30 @@ chocolatine = commands.Bot(command_prefix=">", intents=intents)
 
 @chocolatine.event
 async def on_ready():
-    print("Bot {0.user.display_name} is logged in.".format(chocolatine))
+    print(f"Bot {chocolatine.user.display_name} is logged in.")
 
 
-@chocolatine.command(pass_context=True)
+@chocolatine.command(
+    pass_context=True
+)  # pass_context is no longer necesary, context is always passed automatically
 async def breakfast(ctx):
-  members = get_all_guild_members_mentions(ctx.guild)
-  print(members)
-  await ctx.send("This week, **{}** and **{}** will bring us a nice breakfast!\n_PLEASE screenshot this message_".format(choice(members), choice(members)))
+    members = get_all_guild_members_mentions(ctx.guild)
+    print(members)
+    await ctx.send(
+        f"This week, **{choice(members)}** and **{choice(members)}** will bring us a nice breakfast!\n_PLEASE screenshot this message_"
+    )
 
 
 def get_all_guild_members_mentions(guild):
-  members_mentions = []
-  for member in guild.members:
-    # Add any member's ID that is not the bot ...
-    if member.id != chocolatine.user.id and does_member_has_breakfast_role(member):
-      members_mentions.append(member.mention)
-  return members_mentions
+    return [
+        member.mention
+        for member in filter(does_member_has_breakfast_role, guild.members)
+    ]
 
 
 def does_member_has_breakfast_role(member):
-  for role in member.roles:
-    if role.name == "Breakfast":
-      return True
-  return False
+    roles = [role.name for role in member.roles]
+    return "Breakfast" in roles
+
 
 chocolatine.run(os.getenv("TOKEN"))
