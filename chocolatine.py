@@ -31,12 +31,10 @@ async def breakfast(ctx):
 
 
 def get_all_guild_members_mentions(guild):
-    members_mentions = []
-    for member in guild.members:
-        # Add any member's ID that is not the bot ...
-        if member.id != chocolatine.user.id and does_member_has_breakfast_role(member):
-            members_mentions.append(member.mention)
-    return members_mentions
+    return [
+        member.mention
+        for member in filter(does_member_has_breakfast_role, guild.members)
+    ]
 
 
 def does_member_has_breakfast_role(member):
